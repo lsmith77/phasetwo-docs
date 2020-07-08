@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom'
 import classnames from 'classnames';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
@@ -9,6 +10,7 @@ import ReactTextRotator from 'react-text-rotator';
 import { render } from "react-dom";
 import Carousel from "./carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import FsLightbox from 'fslightbox-react';
 
 const features = [
   {
@@ -95,6 +97,8 @@ const rotatingFeatures = [
   }
 ];
 
+const [toggler, setToggler] = useState(false);
+
 function Feature({imageUrl, title, description}) {
   const imgUrl = useBaseUrl(imageUrl);
   return (
@@ -164,16 +168,22 @@ function Home() {
 
             <div className={styles.heroCta}>
               <p>Phase Two is currently in private BETA. Please request access in order to receive an early access account.</p>
-              <div className={styles.formGroup}>
-                <input id="email" type="text" className={styles.formControl} placeholder="Enter your email"/>
-                <button type="submit" className={styles.btnPrimary} onClick={requestAccess}>Request access</button>
-              </div>
-      {/*<a href="#" className={styles.btnVideo}>
-         <!-- <img src="img/play.svg" alt="Play"></img>
-         How Phase Two Works -->
-         </a> */}
-         </div>
-
+            <div className={styles.formGroup}>
+              <input id="email" type="text" className={styles.formControl} placeholder="Enter your email"/>
+              <button type="submit" className={styles.btnPrimary} onClick={requestAccess}>Request access</button>
+            </div>
+            <p>Hello</p>
+            <button className={styles.btnVideo} onClick={() => setToggler(!toggler)}>
+              <img src="img/play.svg" alt="Play"></img>
+              How Phase Two Works
+            </button>
+            <FsLightbox
+              toggler={toggler}
+              sources={[
+              'https://www.youtube.com/watch?v=I5fg8I3dB28',
+              ]}
+            />
+          </div>
             {/*<div className={styles.indexCtas}>
               <Link
                 className={styles.indexCtasGetStartedButton}
