@@ -97,8 +97,6 @@ const rotatingFeatures = [
   }
 ];
 
-const [toggler, setToggler] = useState(false);
-
 function Feature({imageUrl, title, description}) {
   const imgUrl = useBaseUrl(imageUrl);
   return (
@@ -140,6 +138,7 @@ function applyStartup() {
 function Home() {
   const context = useDocusaurusContext();
   const {siteConfig = {}} = context;
+  const [toggler, setToggler] = useState(false);
   return (
     <Layout
       title={`${siteConfig.title}`}
