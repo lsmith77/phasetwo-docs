@@ -70,6 +70,9 @@ components:
       scheme: bearer
       bearerFormat: ""
   schemas:
+    # keycloak-orgs
+    # https://github.com/p2-inc/keycloak-orgs
+    # - keys are snake-case
     MyOrganizationsRepresentation:
       type: object
       additionalProperties:
@@ -79,7 +82,7 @@ components:
       properties:
         name:
           type: string
-        displayName:
+        display_name:
           type: string
         url:
           type: string
@@ -93,61 +96,6 @@ components:
           type: array
           items:
             type: string
-    IdentityProviderRepresentation:
-      type: object
-      properties:
-        addReadTokenRoleOnCreate:
-          type: boolean
-        alias:
-          type: string
-        config:
-          type: object
-          additionalProperties: true
-        displayName:
-          type: string
-        enabled:
-          type: boolean
-        firstBrokerLoginFlowAlias:
-          type: string
-        internalId:
-          type: string
-        linkOnly:
-          type: boolean
-        postBrokerLoginFlowAlias:
-          type: string
-        providerId:
-          type: string
-        storeToken:
-          type: boolean
-        trustEmail:
-          type: boolean
-    IdentityProviderMapperRepresentation:
-      type: object
-      properties:
-        config:
-          type: object
-          additionalProperties: true
-        id:
-          type: string
-        identityProviderAlias:
-          type: string
-        identityProviderMapper:
-          type: string
-        name:
-          type: string
-    RealmAttributeRepresentation:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-        realm:
-          type: string
-    KeyedRealmAttributeRepresentation:
-      type: object
-      additionalProperties:
-        $ref: "#/components/schemas/RealmAttributeRepresentation"
     OrganizationRepresentation:
       type: object
       properties:
@@ -155,7 +103,7 @@ components:
           type: string
         name:
           type: string
-        displayName:
+        display_name:
           type: string
         url:
           type: string
@@ -209,9 +157,9 @@ components:
           type: string
         send:
           type: boolean
-        inviterId:
+        inviter_id:
           type: string
-        redirectUri:
+        redirect_uri:
           type: string
         roles:
           type: array
@@ -224,14 +172,17 @@ components:
           type: string
         email:
           type: string
-        inviterId:
+        inviter_id:
           type: string
-        organizationId:
+        organization_id:
           type: string
         roles:
           type: array
           items:
             type: string
+
+    # UserRepresentation derived from org.keycloak.representations.idm.UserRepresentation
+    # https://github.com/keycloak/keycloak/blob/main/core/src/main/java/org/keycloak/representations/idm/UserRepresentation.java
     UserRepresentation:
       type: object
       properties:
@@ -259,6 +210,58 @@ components:
           type: string
         username:
           type: string
+
+    # IdentityProviderRepresentation derived from org.keycloak.representations.idm.IdentityProviderRepresentation
+    # https://github.com/keycloak/keycloak/blob/main/core/src/main/java/org/keycloak/representations/idm/IdentityProviderRepresentation.java
+    IdentityProviderRepresentation:
+      type: object
+      properties:
+        addReadTokenRoleOnCreate:
+          type: boolean
+        alias:
+          type: string
+        config:
+          type: object
+          additionalProperties: true
+        displayName:
+          type: string
+        enabled:
+          type: boolean
+        firstBrokerLoginFlowAlias:
+          type: string
+        internalId:
+          type: string
+        linkOnly:
+          type: boolean
+        postBrokerLoginFlowAlias:
+          type: string
+        providerId:
+          type: string
+        storeToken:
+          type: boolean
+        trustEmail:
+          type: boolean
+
+    # IdentityProviderMapperRepresentation derived from org.keycloak.representations.idm.IdentityProviderMapperRepresentation
+    # https://github.com/keycloak/keycloak/blob/main/core/src/main/java/org/keycloak/representations/idm/IdentityProviderMapperRepresentation.java
+    IdentityProviderMapperRepresentation:
+      type: object
+      properties:
+        config:
+          type: object
+          additionalProperties: true
+        id:
+          type: string
+        identityProviderAlias:
+          type: string
+        identityProviderMapper:
+          type: string
+        name:
+          type: string
+
+    # keycloak-events
+    # https://github.com/p2-inc/keycloak-events
+    # - keys are camel-case
     AuthDetailsRepresentation:
       type: object
       properties:
@@ -325,6 +328,23 @@ components:
           type: array
           items:
             type: string
+    RealmAttributeRepresentation:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        realm:
+          type: string
+    KeyedRealmAttributeRepresentation:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/RealmAttributeRepresentation"
+
+    # keycloak-magic-link
+    # https://github.com/p2-inc/keycloak-magic-link
+    # - keys are snake-case
     MagicLinkRepresentation:
       type: object
       properties:
@@ -348,9 +368,11 @@ security:
   - access_token: []
 externalDocs:
   description: Public documentation
-  url: https://phasetwo.io/docs
+  url: https://phasetwo.io/docs/introduction
 paths:
-  # organization resources
+  # keycloak-orgs
+  # https://github.com/p2-inc/keycloak-orgs
+  # organization resources -- keycloak-orgs
   /{realm}/orgs:
     parameters:
       - in: path
@@ -1386,6 +1408,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/OrganizationRoleRepresentation"
+
+  # keycloak-events
+  # https://github.com/p2-inc/keycloak-events
   /{realm}/events:
     parameters:
       - in: path
@@ -1610,6 +1635,9 @@ paths:
           description: success
         404:
           description: Webhook doesn't exist
+
+  # keycloak-magic-link
+  # https://github.com/p2-inc/keycloak-magic-link
   /{realm}/magic-link:
     parameters:
       - in: path
